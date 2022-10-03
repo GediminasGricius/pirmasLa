@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
-use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,15 +16,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
 
+
+
+
+Route::middleware('auth')->group(function () {
+    Route::resources([
+        'products'=>ProductController::class
+    ]);
+
+    Route::resources([
+        'categories'=> CategoryController::class
+    ]);
+    //......
 });
 
-Route::resource('products', ProductController::class);
-Route::get('/produktai',[ProductController::class, 'rodykProduktus' ])->name('produktai');
+
+
+Route::get('/', function () {
+    return view('welcome');
+});
 
 
 
 
 
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

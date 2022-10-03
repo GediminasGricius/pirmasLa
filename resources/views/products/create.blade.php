@@ -10,7 +10,7 @@
     @csrf
     <div class="mb-3">
         <label class="form-label">Pavadinimas:</label>
-        <input class="form-control" type="text" name="name"> 
+        <input class="form-control" type="text" name="name">
     </div>
     <div  class="mb-3">
         <label class="form-label">Kaina:</label>
