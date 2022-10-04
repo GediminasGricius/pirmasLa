@@ -14,6 +14,9 @@
         <td>
             {{ $category->user->email }}
         </td>
+        <td>
+        <td><a class="btn btn-success" href="{{ route('categories.edit', $category->id) }}">Koreguoti</a> </td>
+        </td>
     </tr>
     @endforeach
 </table>

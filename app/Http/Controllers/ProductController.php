@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -25,7 +27,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $categories=Category::all();
+        return view('products.create', ['categories'=>$categories]);
     }
 
     /**
@@ -36,9 +39,38 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        /*
+        $validation=Validator::make($request->all(), [
+            'name'=>['required','alpha_num','min:3', 'max:16','unique:App\Models\Product,name'],
+            'price'=>['required']
+        ]);
+        if ($validation->fails()){
+            dd("Blogai");
+        }
+        */
+
+
+
+        $request->validate([
+            'name'=>['required','alpha_num','min:3', 'max:16','unique:App\Models\Product,name'], //  'required|min:3
+            'price'=>['required']
+        ],[
+            'name.*'=>'Vardas yra privalomas, ne trumpesnis nei 3 simboliai ir ne ilgesnis nei 16 simbolių, turi būti sudarytas tik iš skaičių ir raidžių be tarpų',
+        ]);
+
+        /*
+            'name.required'=>'Jūsų vardas privalo būti pateiktas',
+            'name.unique'=>'Prekė tokiu pavadinimu jau egzistuoja',
+            'name.min'=>'Prekės pavadinimas turi būti ne trumpesnis nei 3 simboliai',
+            'name.alpha_num'=>'Pavadinimą turi sudaryti tik raidės ir skaičiai, be tarpų',
+
+            'price.required'=>'Prekės kaina privalo būti nurodyta'
+
+        ]); */
         $product=new Product();
         $product->name=$request->name;
         $product->price=$request->price;
+        $product->category_id=$request->category_id;
         $product->save();
         return redirect()->route('products.index');
     }
@@ -62,7 +94,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('products.update', ['product'=>$product]);
+        $categories=Category::all();
+        return view('products.update', ['product'=>$product, 'categories'=>$categories]);
     }
 
     /**
@@ -76,6 +109,7 @@ class ProductController extends Controller
     {
         $product->name=$request->name;
         $product->price=$request->price;
+        $product->category_id=$request->category_id;
         $product->save();
         return redirect()->route('products.index');
     }

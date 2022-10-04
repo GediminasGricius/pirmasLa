@@ -60,7 +60,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('categories.update',['category'=>$category]);
     }
 
     /**
@@ -84,5 +84,14 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+    }
+
+    public function addProduct($id, Request $request){
+        $product=new Product();
+        $product->name=$request->name;
+        $product->category_id=$id;
+        $product->price=$request->price;
+        $product->save();
+        return redirect()->route('categories.edit',$id);
     }
 }

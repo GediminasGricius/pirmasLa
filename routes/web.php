@@ -25,9 +25,11 @@ Route::middleware('auth')->group(function () {
         'products'=>ProductController::class
     ]);
 
+    Route::post('/categories/{id}/addProduct',[CategoryController::class,'addProduct'])->name('categories.addProduct');
     Route::resources([
         'categories'=> CategoryController::class
     ]);
+
     //......
 });
 
@@ -40,6 +42,10 @@ Route::get('/', function () {
 
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
