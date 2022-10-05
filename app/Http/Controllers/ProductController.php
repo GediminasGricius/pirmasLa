@@ -9,13 +9,20 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('random');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
         $products= Product::all();
         return view("products.index",['products'=>$products]);
     }
@@ -51,8 +58,9 @@ class ProductController extends Controller
 
 
 
+
         $request->validate([
-            'name'=>['required','alpha_num','min:3', 'max:16','unique:App\Models\Product,name'], //  'required|min:3
+            'name'=>['required','min:3','unique:App\Models\Product,name'], //  'required|min:3
             'price'=>['required']
         ],[
             'name.*'=>'Vardas yra privalomas, ne trumpesnis nei 3 simboliai ir ne ilgesnis nei 16 simbolių, turi būti sudarytas tik iš skaičių ir raidžių be tarpų',

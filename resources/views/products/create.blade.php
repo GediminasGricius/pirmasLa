@@ -3,7 +3,7 @@
 
 
 
-<!--
+
 @if ($errors->any())
     <div class="alert alert-danger">
     @foreach($errors->all() as  $error)
@@ -12,7 +12,6 @@
     </div>
 @endif
 
--->
 
 <form action="{{ route('products.store') }}" method="post">
     @csrf
@@ -37,9 +36,9 @@
     </div>
     <div  class="mb-3">
         <label class="form-label">Kategorija:</label>
-        <select class="form-control" name="category_id">
+        <select class="form-control" name="category_id" >
             @foreach($categories as $category)
-                <option value="{{$category->id}}">{{$category->name}}</option>
+                <option value="{{$category->id}}" @selected(old('category_id')==$category->id)>{{$category->name}}</option>
             @endforeach
         </select>
     </div>

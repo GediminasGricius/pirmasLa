@@ -19,16 +19,20 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
-Route::middleware('auth')->group(function () {
+//, 'random'
+Route::middleware(['auth', 'swear'])->group(function () {
     Route::resources([
         'products'=>ProductController::class
     ]);
 
     Route::post('/categories/{id}/addProduct',[CategoryController::class,'addProduct'])->name('categories.addProduct');
-    Route::resources([
-        'categories'=> CategoryController::class
-    ]);
+
+    Route::middleware('age')->group(function(){
+        Route::resources([
+            'categories'=> CategoryController::class
+        ]);
+    });
+
 
     //......
 });

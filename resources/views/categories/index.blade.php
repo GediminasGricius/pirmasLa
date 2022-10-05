@@ -1,3 +1,4 @@
+Susisiekite su mumis, musu tel: [[tel]]
 <table border="1">
     @foreach($categories as $category)
     <tr>

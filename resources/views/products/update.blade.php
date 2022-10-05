@@ -4,6 +4,13 @@
 
 
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            @foreach($errors->all() as  $error)
+                <div>{{ $error }}</div>
+            @endforeach
+        </div>
+    @endif
 
 
 <form action="{{ route('products.update', $product->id) }}" method="post">
@@ -11,7 +18,7 @@
     @method('PUT')
     <div class="mb-3">
         <label class="form-label">Pavadinimas:</label>
-        <input class="form-control" type="text" name="name" value="{{ $product->name }}">
+        <input class="form-control" type="text" name="name" value="{{ (old('name')==null)?$product->name:old('name') }}">
     </div>
     <div  class="mb-3">
         <label class="form-label">Kaina:</label>
