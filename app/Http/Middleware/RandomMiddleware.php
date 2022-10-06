@@ -16,13 +16,20 @@ class RandomMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        if ($request->user()!=null && $request->user()->name=='Gediminas'){
+            return $next($request);
+        }else{
+            return redirect('/products');
+        }
 
+        /*
        ///Kodas vykdomas pries krovima
        $response= $next($request);
        //Kodas vykdomas po krovimo
        $html= $response->content();
        $html=str_replace('+37067021276', '***', $html);
        $response->setContent($html);
-       return $response;
+       return $response;*/
     }
 }
+

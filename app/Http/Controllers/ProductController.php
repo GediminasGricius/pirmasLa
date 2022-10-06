@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('random');
+
     }
 
 
@@ -102,6 +102,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        //$product=Product::find($product);
         $categories=Category::all();
         return view('products.update', ['product'=>$product, 'categories'=>$categories]);
     }
@@ -118,6 +119,11 @@ class ProductController extends Controller
         $product->name=$request->name;
         $product->price=$request->price;
         $product->category_id=$request->category_id;
+        $img=$request->file('image');
+        $filname=$product->id.'.'.$img->extension();
+
+        $product->img=$filname;
+        $img->storeAs('products',$filname);
         $product->save();
         return redirect()->route('products.index');
     }

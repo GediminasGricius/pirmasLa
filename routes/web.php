@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -17,13 +18,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::get('products',[ProductController::class,'index'])->name('products.index');
 
+Route::middleware(['auth', 'swear', 'random'])->group(function () {
 
-//, 'random'
-Route::middleware(['auth', 'swear'])->group(function () {
-    Route::resources([
-        'products'=>ProductController::class
-    ]);
+    Route::resource('products',ProductController::class)
+        ->except(['index']);
 
     Route::post('/categories/{id}/addProduct',[CategoryController::class,'addProduct'])->name('categories.addProduct');
 
@@ -44,8 +44,12 @@ Route::get('/', function () {
 });
 
 
-
-
+Route::get('/image/{name}',[ImageController::class, 'display'])
+    ->name('image.display')
+    ->middleware('auth');
+Route::get('/productImage/{id}',[ImageController::class, 'productImage'])
+    ->name('image.productImage')
+    ->middleware('auth');
 
 Auth::routes();
 

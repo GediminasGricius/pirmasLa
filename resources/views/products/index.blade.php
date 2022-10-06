@@ -10,6 +10,8 @@
         <div class="col-md-12 mt-5">
             <div class="card">
                 <div class="card-body">
+                    <img src="{{ asset('storage/image.jpg') }}">
+
                     <a class="btn btn-primary" href="{{ route('products.create') }}">Prideti produkta</a>
                     <table class="table">
                         <thead>
@@ -21,6 +23,11 @@
                         <tbody>
                         @foreach($products as $product)
                             <tr>
+                                <td>
+                                    @if ($product->img!=null)
+                                        <img src="{{ route('image.productImage',$product->id) }}" style=" width: 200px;">
+                                    @endif
+                                </td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->price }}</td>
                                 <td>{{ $product->category->name }}</td>

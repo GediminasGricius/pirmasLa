@@ -13,7 +13,7 @@
     @endif
 
 
-<form action="{{ route('products.update', $product->id) }}" method="post">
+<form action="{{ route('products.update', $product->id) }}" method="post" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     <div class="mb-3">
@@ -31,6 +31,10 @@
                 <option @if($category->id==$product->category_id) selected @endif value="{{$category->id}}">{{$category->name}}</option>
             @endforeach
         </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Prekės nuotrauka:</label>
+        <input type="file" class="form-control" name="image">
     </div>
     <button class="btn btn-primary">Atnaujinti</button>
 </form>
