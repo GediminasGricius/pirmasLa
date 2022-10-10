@@ -16,8 +16,6 @@ return new class extends Migration
         Schema::table('categories', function (Blueprint $table){
             //$table->foreignId('user_id')->constrained();
 
-            $table->unsignedBigInteger(   'user_id')->nullable()->default(null);
-
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

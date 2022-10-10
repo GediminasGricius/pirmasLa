@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ImageController;
+use App\Http\Controllers\ImagesController;
+use App\Http\Controllers\LangController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('products',[ProductController::class,'index'])->name('products.index');
+Route::get('/products',[ProductController::class,'index'])->name('products.index');
 
 Route::middleware(['auth', 'swear', 'random'])->group(function () {
 
@@ -43,11 +44,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/setLang/{lang}', [LangController::class,'setLanguage'])->name('setLang');
 
-Route::get('/image/{name}',[ImageController::class, 'display'])
+Route::get('/image/{name}',[ImagesController::class, 'display'])
     ->name('image.display')
     ->middleware('auth');
-Route::get('/productImage/{id}',[ImageController::class, 'productImage'])
+Route::get('/productImage/{id}',[ImagesController::class, 'productImage'])
     ->name('image.productImage')
     ->middleware('auth');
 

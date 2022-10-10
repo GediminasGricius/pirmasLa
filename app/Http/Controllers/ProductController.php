@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -32,8 +33,9 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+
         $categories=Category::all();
         return view('products.create', ['categories'=>$categories]);
     }
@@ -100,9 +102,9 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Product $product, Request $request)
     {
-        //$product=Product::find($product);
+
         $categories=Category::all();
         return view('products.update', ['product'=>$product, 'categories'=>$categories]);
     }

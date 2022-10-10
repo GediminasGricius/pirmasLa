@@ -30,7 +30,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        <li class="nav-item">
+                            <a  class="nav-link" href="{{ route('products.index') }}">{{ __('Products list') }}</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -68,7 +70,12 @@
                             </li>
                         @endguest
                     </ul>
+                    <div class="float-end">
+                        <a href="{{ route('setLang', 'lt') }}"> LT</a> &nbsp;&nbsp;
+                        <a href="{{ route('setLang', 'en') }}"> EN</a>
+                    </div>
                 </div>
+
             </div>
         </nav>
 +37067021276
