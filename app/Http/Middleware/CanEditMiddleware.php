@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-class AgeMidleware
+class CanEditMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,15 +17,9 @@ class AgeMidleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user()==null){
-            return redirect('/');
-        }
-      //  $request->input()
-
         if (Gate::denies('edit')){
-            return redirect('/');
+            return redirect()->back();
         }
-
         return $next($request);
     }
 }

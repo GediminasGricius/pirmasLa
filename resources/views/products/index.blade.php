@@ -12,7 +12,10 @@
                 <div class="card-body">
                     <div class="alert alert-info">{{ __("Please, buy our production") }}</div>
 
+                    @can('create',\App\Models\Product::class)
                     <a class="btn btn-primary" href="{{ route('products.create') }}">{{ __('products.add_product') }}</a>
+                    @endcan
+
                     <table class="table">
                         <thead>
                         <tr>
@@ -31,16 +34,24 @@
                                         <img src="{{ route('image.productImage',$product->id) }}" style=" width: 200px;">
                                     @endif
                                 </td>
-                                <td>{{ __('products.message',['product'=> $product->name ]) }}</td>
+                                <td>{{ $product->name }}</td>
                                 <td>{{ trans_choice("products.kaina", $product->price) }}</td>
                                 <td>{{ $product->category->name }}</td>
-                                <td><a class="btn btn-success" href="{{ route('products.edit', $product->id) }}">Koreguoti</a> </td>
                                 <td>
-                                    <form action="{{ route('products.destroy', $product->id) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger">Ištrinti</button>
-                                    </form>
+                                    @can('update', $product)
+                                            <a class="btn btn-success" href="{{ route('products.edit', $product->id) }}">Koreguoti</a>
+                                    @endcan
+
+                                </td>
+                                <td>
+                                    @can('delete',$product)
+                                        <form action="{{ route('products.destroy', $product->id) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger">Ištrinti</button>
+                                        </form>
+                                    @endcan
+
                                 </td>
                             </tr>
                         @endforeach

@@ -21,18 +21,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/products',[ProductController::class,'index'])->name('products.index');
 
-Route::middleware(['auth', 'swear', 'random'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     Route::resource('products',ProductController::class)
         ->except(['index']);
 
     Route::post('/categories/{id}/addProduct',[CategoryController::class,'addProduct'])->name('categories.addProduct');
 
-    Route::middleware('age')->group(function(){
+
         Route::resources([
             'categories'=> CategoryController::class
         ]);
-    });
+
 
 
     //......

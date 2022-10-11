@@ -6,13 +6,14 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
     public function __construct()
     {
-
+        $this->authorizeResource(Product::class);
     }
 
 
@@ -118,15 +119,18 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $product->name=$request->name;
-        $product->price=$request->price;
-        $product->category_id=$request->category_id;
-        $img=$request->file('image');
-        $filname=$product->id.'.'.$img->extension();
 
-        $product->img=$filname;
-        $img->storeAs('products',$filname);
-        $product->save();
+        if (Gate::allows('edit')) {
+            $product->name = $request->name;
+            $product->price = $request->price;
+            $product->category_id = $request->category_id;
+            $img = $request->file('image');
+            $filname = $product->id . '.' . $img->extension();
+
+            $product->img = $filname;
+            $img->storeAs('products', $filname);
+            $product->save();
+        }
         return redirect()->route('products.index');
     }
 
