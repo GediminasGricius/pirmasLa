@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewProductEvent;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -25,7 +26,11 @@ class ProductController extends Controller
     public function index(Request $request)
     {
 
-        $products= Product::all();
+        //$products= Product::with(['category','category.user'])->where('price','>',10)->get();
+        $products= Product::with(['category','category.user'])->get();
+
+        //$products= $products->where('price','>',10);
+        // dd($products);
         return view("products.index",['products'=>$products]);
     }
 
@@ -83,6 +88,10 @@ class ProductController extends Controller
         $product->price=$request->price;
         $product->category_id=$request->category_id;
         $product->save();
+
+        event(new NewProductEvent($product));
+
+
         return redirect()->route('products.index');
     }
 

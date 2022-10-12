@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\NewProductEvent;
+use App\Events\NewUserEvent;
+use App\Listeners\AddToFrontPage;
+use App\Listeners\NemokamasProduktas;
+use App\Listeners\SendUsersEmailAboutProduct;
+use App\Listeners\SendWelcomeEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,7 +23,17 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+
         ],
+        NewProductEvent::class =>[
+            SendUsersEmailAboutProduct::class,
+           // AddToFrontPage::class,
+            NemokamasProduktas::class
+        ],
+        NewUserEvent::class=>[
+            SendWelcomeEmail::class,
+        ]
+
     ];
 
     /**

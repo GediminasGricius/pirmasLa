@@ -35,8 +35,9 @@
                                     @endif
                                 </td>
                                 <td>{{ $product->name }}</td>
-                                <td>{{ trans_choice("products.kaina", $product->price) }}</td>
-                                <td>{{ $product->category->name }}</td>
+                                <td>{{  $product->price }}</td>
+                                <td>{{ $product->category->name }}
+                                    {{ $product->category->user->name }}</td>
                                 <td>
                                     @can('update', $product)
                                             <a class="btn btn-success" href="{{ route('products.edit', $product->id) }}">Koreguoti</a>
