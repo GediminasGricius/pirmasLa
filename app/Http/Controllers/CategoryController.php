@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -15,7 +16,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories=Category::all();
+        //$categories=Category::where('user_id',Auth::user()->id)->get();
+        $categories=Category::my()->get();
+
+        $categories=Category::getMyCategories();
 
         return view("categories.index",['categories'=>$categories]);
     }

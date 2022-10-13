@@ -162,4 +162,10 @@ class ProductController extends Controller
        return view("products",['products'=>$products]);
 
     }
+
+    public function categoryProducts($category_id){
+        $category=Category::with('products')->where('id',$category_id)->first();
+        $products=Product::where('category_id',$category_id)->orderBy('price')->get();
+        return view('products.category', ['category'=>$category, 'products'=>$products]);
+    }
 }

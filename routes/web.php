@@ -25,6 +25,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('products',ProductController::class)
         ->except(['index']);
+    Route::get('/products/category/{category_id}',[ ProductController::class, 'categoryProducts'])->name('products.category');
 
     Route::post('/categories/{id}/addProduct',[CategoryController::class,'addProduct'])->name('categories.addProduct');
 
@@ -52,10 +53,6 @@ Route::get('/image/{name}',[ImagesController::class, 'display'])
 Route::get('/productImage/{id}',[ImagesController::class, 'productImage'])
     ->name('image.productImage')
     ->middleware('auth');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
