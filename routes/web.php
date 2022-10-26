@@ -42,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view("index");
 });
 
 Route::get('/setLang/{lang}', [LangController::class,'setLanguage'])->name('setLang');

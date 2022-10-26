@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\NewProductEvent;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
@@ -26,12 +27,16 @@ class ProductController extends Controller
     public function index(Request $request)
     {
 
+        $user=User::find($request->user()->id);
+       // dd($user->products);
+
         //$products= Product::with(['category','category.user'])->where('price','>',10)->get();
         $products= Product::with(['category','category.user'])->get();
 
         //$products= $products->where('price','>',10);
         // dd($products);
-        return view("products.index",['products'=>$products]);
+        //rejson_encode($products)
+        return view("products.index",['products'=>$products, 'user'=>$user]);
     }
 
     /**

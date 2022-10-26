@@ -6,10 +6,16 @@
 
 <div class="container">
 
+
     <div class="row">
         <div class="col-md-12 mt-5">
             <div class="card">
                 <div class="card-body">
+                    @foreach($user->products as $product)
+                        Nusipirktas produktas: {{$product->name}}, Produkto savininkas: {{ $product->owner->name }},
+                        Kategorija: {{ $product->category->name }}<br>
+                    @endforeach
+                    <hr>
                     <div class="alert alert-info">{{ __("Please, buy our production") }}</div>
 
                     @can('create',\App\Models\Product::class)

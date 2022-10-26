@@ -19,7 +19,6 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => fake()->word(),
-            'user_id'=>3
         ];
     }
 }

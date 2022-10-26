@@ -13,6 +13,10 @@ class Product extends Model
     public function category(){
         return $this->belongsTo(Category::class);
     }
+
+    public function owner(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
     /**
      * Scope a query to only include popular users.
      *
